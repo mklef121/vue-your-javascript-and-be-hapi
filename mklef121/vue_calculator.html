@@ -1,0 +1,235 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<div class="container text-center" id="calc">
+    <div class="calcBG col-md-3 col-md-offset-4 text-center">
+        <div class="row">
+            <small>Vue Js Calculator</small>
+        </div>
+        <div class="row" id="result">
+            <form name="calc">
+                <input type="text" class="screen text-right" v-model="total_answer" name="result" readonly>
+            </form>
+        </div>
+        <div class="row">
+            <button id="allClear" type="button" class="btn btn-danger" @click="killself">AC</button>
+            <button id="clear" type="button" class="btn btn-warning" @click="clearScreen">CE</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(operator_modulus,yes)">{{operator_modulus | OperatorSign}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(operator_divide,yes)">{{operator_divide | OperatorSign}}</button>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-info" @click="FormEquation(seven)">{{seven}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(eight)"> {{eight}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(nine)">{{nine}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(operator_multiply,yes)">{{operator_multiply | OperatorSign}}</button>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-info" @click="FormEquation(four)">{{four}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(five)">{{five}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(six)">{{six}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(operator_minus,yes)">{{operator_minus | OperatorSign}}</button>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-info" @click="FormEquation(one)">{{one}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(two)">{{two}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(three)">{{three}}</button>
+            <button type="button" class="btn btn-info" @click="FormEquation(operator_addition,yes)">{{operator_addition | OperatorSign}}</button>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-info" @click="FormEquation(zero)">{{zero}}</button>
+            <button id="." type="button" class="btn btn-info" @click="FormEquation(dot)">{{dot}}</button>
+            <button id="equals" type="button" class="btn btn-success" @click="calculate">{{equals}}</button>
+            <button id="blank" type="button" class="btn btn-info">&nbsp;</button>
+        </div>
+    </div>
+</div>
+<script src="vue.js"></script>
+<script type="text/javascript">
+new Vue({
+    el: '.container',
+    data: {
+        one: 1,
+        two: 2,
+        three: 3,
+        four: 4,
+        five: 5,
+        six: 6,
+        seven: 7,
+        eight: 8,
+        nine: 9,
+        zero: 0,
+        operator_multiply: '*',
+        operator_minus: '-',
+        operator_divide: '/',
+        operator_addition: '+',
+        operator_modulus: '%',
+        last_operator: "",
+        operation_text: "",
+        equals: '=',
+        total_answer: "",
+        yes: 'yes',
+        dot: '.',
+
+        operator_array: [
+            this.operator_multiply,
+            this.operator_minus,
+            this.operator_divide,
+            this.operator_addition,
+            this.operator_modulus
+        ]
+
+
+    },
+    methods: {
+        calculate: function(event) {
+            event.preventDefault();
+
+            try {
+                this.total_answer = eval(this.total_answer);
+                return true;
+            } catch (err) {
+                this.total_answer = "Error";
+                return false;
+            }
+
+        },
+
+        FormEquation: function(figure, isoperator) {
+            //event.preventDefault();
+            if (isoperator) {
+                var begining_answer = this.total_answer.charAt(0);
+                if (this.operator_array.indexOf(begining_answer) > -1) {
+                    alert("you cannot start a calculation with double arithmetic sign");
+                    return;
+                }
+
+                this.total_answer += figure;
+                this.last_operator = figure;
+                return true;
+
+            }
+
+            this.total_answer += figure;
+            return true;
+
+        },
+
+        clearScreen() {
+            this.total_answer = '';
+            this.last_operator = '';
+        },
+
+        killself() {
+            this.total_answer = '';
+            this.last_operator = '';
+            var self = this;
+            setTimeout(function() {
+                self.$destroy();
+            }, 100);
+        }
+    },
+
+    filters: {
+
+        OperatorSign(operator) {
+            //return operator;
+            if (operator == this.operator_multiply) {
+                return " * ";
+            } else if (operator == this.operator_minus) {
+                return " - ";
+            } else if (operator == this.operator_divide) {
+                return " ÷ ";
+            } else if (operator == this.operator_addition) {
+                return " + ";
+            } else if (operator == this.operator_modulus) {
+                return " % ";
+            }
+
+            return operator;
+
+
+
+        }
+    }
+});
+</script>
+
+<style type="text/css">
+body {
+    background: #83a4d4;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #83a4d4, #b6fbff);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #83a4d4, #b6fbff);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+input {
+    border: none;
+}
+
+button {
+    height: 50px;
+    width: 50px;
+    margin: 10px 4px;
+    box-shadow: inset 1px 1px 50px #0066FF;
+    border: none !important;
+}
+
+*:focus {
+    outline: 0 !important;
+}
+
+#allClear {
+    box-shadow: inset 1px 1px 50px #990000;
+    border: none;
+}
+
+#clear {
+    box-shadow: inset 1px 1px 50px #CC6600;
+    border: none;
+}
+
+#equals {
+    box-shadow: inset 1px 1px 50px #006633;
+    border: none;
+}
+
+
+
+/* Hidden button for formatting sake */
+
+#blank {
+    visibility: hidden;
+}
+
+.calcBG {
+    background-color: #08a27b;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-shadow: inset 1px 1px 50px #000;
+}
+
+.screen {
+    height: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 2px;
+    font-size: 16px;
+    font-weight: bold;
+
+
+    background: #8e9eab;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #8e9eab, #eef2f3);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #8e9eab, #eef2f3);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    box-shadow: 0px 4px #000099 inset;
+}
+
+small {
+    color: #fff;
+    font-weight: bold;
+}
+</style>
