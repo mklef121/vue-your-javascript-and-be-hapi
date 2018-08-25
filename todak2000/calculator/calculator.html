@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue Calculator</title>
+	<link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:800" rel="stylesheet">
+	<style type="text/css">
+		#calculator{
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			grid-auto-rows: minmax(50px, auto);
+			font-size: 30px;
+			font-family: 'M PLUS Rounded 1c', sans-serif;
+			width: 400px;
+			margin: 10% auto;
+			border-radius: 10px;
+		}
+		.result{
+			grid-column: 1/5;
+			background-color: #123;
+			color: #fff;
+			padding-top: 10px;
+			border-radius: 10px 10px 0 0;
+		}
+		.button{
+		    background-color: #f2f2f2;
+		    box-shadow: inset 0 1px 1px #a4e388;
+			border: 2px solid #999;
+			font-size: 20px;
+			font-family: 'M PLUS Rounded 1c', sans-serif;
+		}
+		 .left-radius{
+		 	border-bottom-left-radius: 10px;
+        }
+        .right-radius{
+		 	border-bottom-right-radius: 10px;
+        }
+		.operator {
+		  background-color: #578843;
+		  color: white;
+		  box-shadow: inset 0 1px 1px #a4e388;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="calculator">
+			<div align="center" class="result">{{current || '0'}}</div>
+			<button class="button" v-on:click="clear">C</button>
+			<button class="button" v-on:click="division">/</button>
+			<button class="button" v-on:click="sign">+/-</button>
+			<button class="button operator" v-on:click="percentage">%</button>
+			<button class="button" v-on:click="sin">sin</button>
+			<button class="button" v-on:click="cos">cos</button>
+			<button class="button" v-on:click="tan">tan</button>
+			<button class="button operator" v-on:click="squareRoot">√</button>
+			<button class="button" v-on:click="press('7')">7</button>
+			<button class="button" v-on:click="press('8')">8</button>
+			<button class="button" v-on:click="press('9')">9</button>
+			<button class="button operator" v-on:click="addition">+</button>
+			<button class="button" v-on:click="press('4')">4</button>
+			<button class="button" v-on:click="press('5')">5</button>
+			<button class="button" v-on:click="press('6')">6</button>
+			<button class="button operator" v-on:click="subtraction">-</button>
+			<button class="button" v-on:click="press('1')">1</button>
+			<button class="button" v-on:click="press('2')">2</button>
+			<button class="button" v-on:click="press('3')">3</button>
+			<button class="button operator" v-on:click="multiplication">*</button>
+			<button class="button left-radius" v-on:click="press('0')">0</button>
+			<button class="button" v-on:click="press('.')">.</button>
+			<button class="button " v-on:click="equal">=</button>
+			<button class="button operator right-radius" v-on:click="square">x²</button>
+			
+	</div>
+	<script src="jquery.js"></script>
+	<script src="vue.js"></script>
+
+    <script>
+      // Vue app here
+      var app = new Vue({
+      	el: "#calculator",
+      	data() {
+      		return {
+		      current: '',
+		      previous: null,
+		      operator: null,
+		      operatorClicked: false,
+		    }
+		  },
+		  methods : {
+		  	
+		    press(num){
+		    	if (this.operatorClicked) {
+		        this.current = '';
+		        this.operatorClicked = false;
+		      }
+		    	this.current = `${this.current}${num}`;
+		    },
+		    clear(){
+		    	this.current = '';
+		    },
+		    sign() {
+		      this.current = this.current.charAt(0) === '-' ? 
+		        this.current.slice(1) : `-${this.current}`;
+		    },
+		    setPrevious() {
+		      this.previous = this.current;
+		      this.operatorClicked = true;
+		    },
+		    division(){
+		    	this.operator = (a,b)=> a/b;
+		    	this.setPrevious();		    
+		    },
+		    addition(){
+		    	this.operator = (a,b)=> a+b;
+		    	this.setPrevious();
+		    },
+		    subtraction(){
+		    	this.operator = (a,b)=> a-b;
+		    	this.setPrevious();
+		    },
+		    multiplication(){
+		    	this.operator = (a,b)=> a*b;
+		    	this.setPrevious();
+		    },
+		    percentage(){
+		    	this.current = `${parseFloat(this.current) / 100}`;
+		    },
+		    square(){
+		    	this.operator = (a)=> a*a;
+		    	this.setPrevious();
+		    },
+		    sin(){
+		    	this.operator =(a)=> (Math.sin(a/180*Math.PI)).toFixed(4);
+		    	this.setPrevious();
+		    },
+		    cos(){
+		    	this.operator =(a)=> (Math.cos(a/180*Math.PI)).toFixed(4);
+		    	this.setPrevious();
+		    },
+		    tan(){
+		    	this.operator =(a)=> (Math.tan(a/180*Math.PI)).toFixed(4);
+		    	this.setPrevious();
+		    },
+		    squareRoot(){
+		    	this.operator = (a)=> Math.sqrt(a);
+		    	this.setPrevious();
+		    },
+		    equal(){
+		  		this.current =`${this.operator(parseFloat(this.current), parseFloat(this.previous))}`;
+		  		this.previous = null;
+		  		}
+		  }
+      });
+
+    </script>
+</body>
+</html>
