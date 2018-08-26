@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sammy's Simple Calcualtor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="calcstyle.css">
+    </head>
+
+<body>
+    
+    <div id="calc">
+        <div id="calWrap"> 
+            <header>
+                Sammy's Calculator
+            </header>
+            <div class="top">
+                <input type="text" v-model="total" />
+            </div>
+            <div id="calckeys">
+                <div v-on:click="controlNum(7)">7</div>
+                <div v-on:click="controlNum(8)">8</div>
+                <div v-on:click="controlNum(9)">9</div>
+                <div v-on:click="controlNum('+')">+</div>
+                <div v-on:click="controlNum(4)">4</div>
+                <div v-on:click="controlNum(5)">5</div>
+                <div v-on:click="controlNum(6)">6</div>
+                <div v-on:click="controlNum('-')">-</div>
+                <div v-on:click="controlNum(1)">1</div>
+                <div v-on:click="controlNum(2)">2</div>
+                <div v-on:click="controlNum(3)">3</div>
+                <div v-on:click="controlNum('*')">*</div>
+                <div v-on:click="controlNum(0)">0</div>
+                <div v-on:click="clear()" class="clear">c</div>
+                <div v-on:click="equal()">=</div>
+                <div v-on:click="controlNum('/')">/</div>
+            </div>
+        </div>  
+                
+</body>
