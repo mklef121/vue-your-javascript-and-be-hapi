@@ -1,1 +1,2 @@
-Umoren Git folder for Vue project
+# Sammy-s-Calculator
+A calculator built with vuejs
