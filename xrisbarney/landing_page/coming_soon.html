@@ -1,0 +1,170 @@
+<html>
+	<head>
+		<title>Vue Calculator</title>
+		<style type="text/css">
+		body{
+			background-color: gold;
+			background-image: linear-gradient(grey, gold);
+		}
+		.container {
+			display: flex;
+			height: 100%;
+			/*position: relative;*/
+		} 
+		.container #contents {
+			    display: flex;
+			    flex-direction: column;
+			    width: 100%;
+			    
+			}
+		.container .top{
+			height:5%;
+			width: 100%;
+			display: block;
+			margin-top: 3px;
+			padding-bottom: 5px;
+			background: grey;
+		} 
+		
+		.middle {
+		    position: relative;
+		    background: #5C97FF;
+		    overflow: hidden;
+		    height:60%;
+		}
+		.middle:before {
+		    content: ' ';
+		    display: block;
+		    position: absolute;
+		    left: 0;
+		    top: 0;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 1;
+		    opacity: 0.6;
+		    background-image: url('img/1.png');
+		    background-repeat: repeat;
+		}
+		.middle .middle-content {
+			padding: 50px;
+		    z-index: 2;
+		    position: relative;
+		    /*color: #fff;*/
+		}
+		.middle .middle-content h2 {
+			text-align: center;
+		    position: relative;
+		    color: #fff;
+		    font-size: 40px;
+		    text-transform: uppercase;
+		}
+		.middle .middle-content p {
+			text-align: center;
+		    position: relative;
+		    color: gold;
+		    font-size: 30px;
+		}
+		</style>
+	</head>
+	
+	
+<body>
+	<div class="container">
+		<div id="contents">
+	  		<div class="top">
+	  			<p>hello</p>
+	  		</div>
+	  		
+	  		<div class="middle">
+	  			<div class="middle-content">
+		  			<h2>Something big is coming!</h2>
+		  			<p>Countdown</p>
+		  			<div class="countdown">
+		  				
+		  			</div>
+	  			</div>
+	  		</div>
+	  		<div class="bottom">
+	  			
+	  		</div>
+  		</div>
+	</div>
+	
+</body>
+
+<script src="js/vue.js">
+
+</script>
+	<script>
+		
+		
+		new Vue({
+		  el: '#calculator',
+		  data: {
+		    value: '',
+		    message: '0',
+		    equation: '',
+		    cal: ''
+		  },
+		  methods: {
+		    input: function(num) {
+		      if(num == '.' && this.message.includes('.'))
+		        return;
+		      else if(this.message == '0'){
+		        this.message = num;
+		        this.value = num;
+		      }    
+		      else {
+		        this.value += num;
+		        this.message = this.value;
+		      } 
+		      //this.equation += num;
+		      //console.log(this.equation);
+		    },
+		    //clear the display
+		    clear: function() {
+		      if(this.message == '0')
+		        this.equation = '';
+		      this.message = '0';
+		      this.value = '';
+		    },
+		    operator: function(opt) {
+		      this.cal = opt;
+		      this.equation += this.value;
+		      this.message = eval(this.equation).toString();
+		      this.equation = this.message;
+		      this.equation += opt;
+		      this.value = '';
+		      console.log(this.equation);
+		      
+		    },
+		    percentage: function() {
+		      this.equation = '';
+		      this.message = (this.message/100).toString();
+		      this.value = this.message;
+		    },
+		    inverse : function() {
+		      if (this.message == 0)
+		        return false;
+		      this.equation = '';
+		      if(this.message[0] == '-')
+		        this.message = this.message.substr(1);
+		      else
+		        this.message = '-' + this.message;
+		      this.value = this.message;
+		    },
+		    equal: function() {
+		      if(this.equation == '')
+		        return;
+		      if(this.cal != '')
+		        this.equation += this.message;
+		      this.message = eval(this.equation).toString();
+		      console.log(eval(this.equation));
+		      this.value = '';
+		      this.cal = '';
+		      this.equation = this.message;
+		    }
+		  }
+		})
+	</script>
+</html>
