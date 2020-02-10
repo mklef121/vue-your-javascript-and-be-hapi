@@ -1,0 +1,54 @@
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: black;
+}
+body #calWrap {
+  background-color: rgb(0,0,0,0.9);
+  border-radius: 23px;
+  padding: 2em 1em 1em 1em;
+  margin: auto;
+  width: 294px;
+  clear: both;
+  display: table;
+}
+body .top input {
+  height: 46px;
+  width: 90%;
+  font-size: 2em;
+  font-weight: bold;
+  border-radius: 0px;
+  margin: 0 0 14px 0;
+  border: 0;
+  padding: 0 0.7em;
+  box-shadow: 0px 4px rgba(0, 0, 0, 0.2);
+}
+body #calckeys div {
+  cursor: pointer;
+  width: 66px;
+  height: 36px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 2em;
+  background: lightcyan;
+  border-radius: 1px;
+  
+  margin: 0 7px 11px 0;
+  float: left;
+  
+}
+body #calckeys div:hover {
+  background-color: #D6D6D6;
+}
+body #calckeys .clear {
+  background-color: red !important;
+  color: white;
+}
+
+header{
+  color: white;
+  text-align: center;
+  padding: 2em 1em 1em;
+  font-weight: 700;
+}
+   
